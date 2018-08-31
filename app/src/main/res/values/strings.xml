@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">QR Code Generator</string>
+
+    <string name="name_label">Name : </string>
+    <string name="age_label">Age : </string>
+    <string name="phone_label">Phone Number : </string>
+
+    <string name="name_hint">Type Your Name</string>
+    <string name="age_hint">Type Your Age</string>
+    <string name="phone_hint">Type Your Phone Number</string>
+    <string name="generate_qr_button">Generate QR Code</string>
+
+
     <string name="default_text_result">Please focus camera to the QR Code</string>
+
 </resources>
