@@ -99,15 +99,21 @@ public class CodeGeneratorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "saveButton.setOnClickListener : started");
                 Bitmap qrCode = mQRCodeBitmap;
+                String file_name = "qrcode-"+editTextPhone.getText().toString()+".jpg";
                 FileOutputStream fileOutputStream = null;
                 String extDirPath = Environment.getExternalStorageDirectory().toString();
+                File myDir = new File(extDirPath);
+                myDir.mkdirs();
                 Log.d(TAG, "onClick: "+extDirPath);
                 try {
-                    //fileOutputStream = new FileOutputStream("qrcode");
-                    File file = new File(extDirPath, "qrcode"+editTextPhone.getText().toString()+".jpeg");
+                    File file = new File(myDir, file_name);
+                    if (file.exists()) file.delete();
                     fileOutputStream = new FileOutputStream(file);
-                    qrCode.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream); 
+                    qrCode.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
                     // PNG is a lossless format, the compression factor (100) is ignored
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+
                     Log.d(TAG, "onClick: file saved");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -130,17 +136,6 @@ public class CodeGeneratorActivity extends AppCompatActivity {
                 Bitmap qrCode = mQRCodeBitmap;
                 Intent shareQRCode = new Intent(Intent.ACTION_SEND);
                 shareQRCode.setType("image/jpeg");
-                /*ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                qrCode.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-                File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
-                try {
-                    f.createNewFile();
-                    FileOutputStream fo = new FileOutputStream(f);
-                    fo.write(bytes.toByteArray());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
-
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "QR_Code");
                 values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
